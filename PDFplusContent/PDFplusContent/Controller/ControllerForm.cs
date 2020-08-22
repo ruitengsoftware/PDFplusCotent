@@ -59,13 +59,15 @@ namespace PDFplusContent.Controller
             try
             {
                 Aspose.Pdf.Document mypdf = new Document(file);
-
+               
                 var device = new Aspose.Pdf.Devices.JpegDevice();
+                //string str_path = @"C:\Users\瑞腾软件\Desktop\pic.jpg";
                 MemoryStream ms = new MemoryStream();
-                device.Process(mypdf.Pages[1], ms);
+                //FileStream fs= new FileStream(str_path, FileMode.OpenOrCreate);
+                device.Process(mypdf.Pages[1],ms);
+                //fs.Close();
                 return new Bitmap(ms);
-
-            }
+           }
             catch { return null; }
         }
 

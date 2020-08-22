@@ -2,6 +2,7 @@
 using Aspose.Pdf;
 using iTextSharp.text;
 using PDFplusContent.Controller;
+using RuiTengDll;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -151,13 +152,15 @@ namespace PDFplusContent
            
                 using (System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(smallImg))
                 {
-                    //添加头像
-                    //g.DrawImage(smallImg, 0, 0, smallImg.Width, smallImg.Height);
-                    //SolidBrush drawBush = new SolidBrush(Color.Red);
-                    //Font drawFont = new Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Millimeter);
-                    //string newPath = path + "\\" + filename + ".png";
-                    //写汉字
-                    g.DrawString(strinfo,new System.Drawing.Font("微软雅黑",10, System.Drawing.FontStyle.Regular), new SolidBrush(System.Drawing.Color.Red),Convert.ToSingle( numericX.Value), Convert.ToSingle(numericY.Value));
+                //添加头像
+                //g.DrawImage(smallImg, 0, 0, smallImg.Width, smallImg.Height);
+                //SolidBrush drawBush = new SolidBrush(Color.Red);
+                //Font drawFont = new Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Millimeter);
+                //string newPath = path + "\\" + filename + ".png";
+                //写汉字
+                var style = cb_bold.Checked ? System.Drawing.FontStyle.Bold : System.Drawing.FontStyle.Regular;
+
+                    g.DrawString(strinfo,new System.Drawing.Font(tb_ziti.Text,Convert.ToSingle( numericsize.Value),style ), new SolidBrush(lbl_color.BackColor),Convert.ToSingle( numericX.Value), Convert.ToSingle(numericY.Value));
                     //bigImage.Save(newPath, System.Drawing.Imaging.ImageFormat.Png);
                     
                 }
@@ -168,7 +171,11 @@ namespace PDFplusContent
 
 
         }
-
+        /// <summary>
+        /// 点击开始按钮时出发的事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void label7_Click(object sender, EventArgs e)
         {
             //获得pbdisplay 中的图片
@@ -187,6 +194,53 @@ namespace PDFplusContent
             image.Alignment = iTextSharp.text.Image.ALIGN_MIDDLE;
             mydocument.Add(image);
             mydocument.Close();
+        }
+
+        private void lbl_color_Click(object sender, EventArgs e)
+        {
+            ColorDialog mycd = new ColorDialog();
+            if (mycd.ShowDialog()==DialogResult.OK)
+            {
+                lbl_color.BackColor = mycd.Color;
+
+
+            }
+        }
+
+        private void lbl_style_Click(object sender, EventArgs e)
+        {
+            FontDialog myfd = new FontDialog();
+            if (myfd.ShowDialog()==DialogResult.OK)
+            {
+                //获得字体名称给，大小，粗体
+                string fontname = myfd.Font.Name;
+                decimal fontsize =Convert.ToDecimal( myfd.Font.Size);
+                bool bold = myfd.Font.Bold;
+                tb_ziti.Text = fontname;
+                numericsize.Value = fontsize;
+                cb_bold.Checked = bold;
+
+            }
+        }
+        UIHelper _myui = new UIHelper();
+        private void lbl_addwenjian_Paint(object sender, PaintEventArgs e)
+        {
+            _myui.DrawRoundRect((Control)sender);
+        }
+
+        private void lbl_addwenjian_MouseEnter(object sender, EventArgs e)
+        {
+            int margin = ((Control)sender).Margin.Top;
+            _myui.UpdateCSize((Control)sender,new Padding(margin-1));
+            _myui.UpdateCC((Control)sender, System.Drawing.Color.OrangeRed, System.Drawing.Color.White);
+        }
+
+        private void lbl_addwenjian_MouseLeave(object sender, EventArgs e)
+        {
+            int margin = ((Control)sender).Margin.Top;
+            _myui.UpdateCSize((Control)sender, new Padding(margin +1));
+            _myui.UpdateCC((Control)sender, System.Drawing.Color.Tomato, System.Drawing.Color.White);
+
         }
     }
 }
