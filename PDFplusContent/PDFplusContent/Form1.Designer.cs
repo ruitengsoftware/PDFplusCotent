@@ -41,15 +41,15 @@
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.label3 = new System.Windows.Forms.Label();
             this.mytextbox = new System.Windows.Forms.TextBox();
-            this.lbl_style = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.label6 = new System.Windows.Forms.Label();
             this.numericY = new System.Windows.Forms.NumericUpDown();
+            this.label5 = new System.Windows.Forms.Label();
             this.numericX = new System.Windows.Forms.NumericUpDown();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
+            this.lbl_style = new System.Windows.Forms.Label();
             this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
             this.tb_ziti = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
@@ -277,42 +277,6 @@
             this.mytextbox.Size = new System.Drawing.Size(414, 23);
             this.mytextbox.TabIndex = 1;
             // 
-            // lbl_style
-            // 
-            this.lbl_style.AutoSize = true;
-            this.lbl_style.BackColor = System.Drawing.Color.Tomato;
-            this.lbl_style.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lbl_style.ForeColor = System.Drawing.Color.White;
-            this.lbl_style.Location = new System.Drawing.Point(243, 3);
-            this.lbl_style.Margin = new System.Windows.Forms.Padding(3);
-            this.lbl_style.Name = "lbl_style";
-            this.lbl_style.Size = new System.Drawing.Size(74, 24);
-            this.lbl_style.TabIndex = 2;
-            this.lbl_style.Text = "字体样式";
-            this.lbl_style.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lbl_style.Click += new System.EventHandler(this.lbl_style_Click);
-            this.lbl_style.Paint += new System.Windows.Forms.PaintEventHandler(this.lbl_addwenjian_Paint);
-            this.lbl_style.MouseEnter += new System.EventHandler(this.lbl_addwenjian_MouseEnter);
-            this.lbl_style.MouseLeave += new System.EventHandler(this.lbl_addwenjian_MouseLeave);
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.BackColor = System.Drawing.Color.Tomato;
-            this.label5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label5.ForeColor = System.Drawing.Color.White;
-            this.label5.Location = new System.Drawing.Point(323, 3);
-            this.label5.Margin = new System.Windows.Forms.Padding(3);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(74, 24);
-            this.label5.TabIndex = 3;
-            this.label5.Text = "效果预览";
-            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.label5.Click += new System.EventHandler(this.label5_Click);
-            this.label5.Paint += new System.Windows.Forms.PaintEventHandler(this.lbl_addwenjian_Paint);
-            this.label5.MouseEnter += new System.EventHandler(this.lbl_addwenjian_MouseEnter);
-            this.label5.MouseLeave += new System.EventHandler(this.lbl_addwenjian_MouseLeave);
-            // 
             // tableLayoutPanel6
             // 
             this.tableLayoutPanel6.ColumnCount = 9;
@@ -365,6 +329,24 @@
             this.numericY.Name = "numericY";
             this.numericY.Size = new System.Drawing.Size(54, 23);
             this.numericY.TabIndex = 2;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.BackColor = System.Drawing.Color.Tomato;
+            this.label5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label5.ForeColor = System.Drawing.Color.White;
+            this.label5.Location = new System.Drawing.Point(323, 3);
+            this.label5.Margin = new System.Windows.Forms.Padding(3);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(74, 24);
+            this.label5.TabIndex = 3;
+            this.label5.Text = "效果预览";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label5.Click += new System.EventHandler(this.label5_Click);
+            this.label5.Paint += new System.Windows.Forms.PaintEventHandler(this.lbl_addwenjian_Paint);
+            this.label5.MouseEnter += new System.EventHandler(this.lbl_addwenjian_MouseEnter);
+            this.label5.MouseLeave += new System.EventHandler(this.lbl_addwenjian_MouseLeave);
             // 
             // numericX
             // 
@@ -419,6 +401,24 @@
             this.label7.Paint += new System.Windows.Forms.PaintEventHandler(this.lbl_addwenjian_Paint);
             this.label7.MouseEnter += new System.EventHandler(this.lbl_addwenjian_MouseEnter);
             this.label7.MouseLeave += new System.EventHandler(this.lbl_addwenjian_MouseLeave);
+            // 
+            // lbl_style
+            // 
+            this.lbl_style.AutoSize = true;
+            this.lbl_style.BackColor = System.Drawing.Color.Tomato;
+            this.lbl_style.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lbl_style.ForeColor = System.Drawing.Color.White;
+            this.lbl_style.Location = new System.Drawing.Point(243, 3);
+            this.lbl_style.Margin = new System.Windows.Forms.Padding(3);
+            this.lbl_style.Name = "lbl_style";
+            this.lbl_style.Size = new System.Drawing.Size(74, 24);
+            this.lbl_style.TabIndex = 2;
+            this.lbl_style.Text = "字体样式";
+            this.lbl_style.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lbl_style.Click += new System.EventHandler(this.lbl_style_Click);
+            this.lbl_style.Paint += new System.Windows.Forms.PaintEventHandler(this.lbl_addwenjian_Paint);
+            this.lbl_style.MouseEnter += new System.EventHandler(this.lbl_addwenjian_MouseEnter);
+            this.lbl_style.MouseLeave += new System.EventHandler(this.lbl_addwenjian_MouseLeave);
             // 
             // tableLayoutPanel7
             // 

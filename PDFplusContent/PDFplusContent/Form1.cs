@@ -163,7 +163,7 @@ namespace PDFplusContent
                     g.DrawString(strinfo,new System.Drawing.Font(tb_ziti.Text,Convert.ToSingle( numericsize.Value),style ), new SolidBrush(lbl_color.BackColor),Convert.ToSingle( numericX.Value), Convert.ToSingle(numericY.Value));
                     //bigImage.Save(newPath, System.Drawing.Imaging.ImageFormat.Png);
                     
-                }
+                } 
 
             //显示图片
             pb_display.Image = smallImg;
