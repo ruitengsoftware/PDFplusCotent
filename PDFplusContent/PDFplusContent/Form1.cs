@@ -17,6 +17,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.XPath;
 
 namespace PDFplusContent
 {
@@ -33,7 +34,7 @@ namespace PDFplusContent
             //获得文件
             var list = _mycontroller.GetSingleFile();
             //添加到mytreeview中
-            foreach (string  item in list)
+            foreach (string item in list)
             {
                 TreeNode mynode = new TreeNode();
                 mynode.Name = item;
@@ -53,7 +54,7 @@ namespace PDFplusContent
             string dir = _mycontroller.GetDir();
             //构造主节点
             TreeNode mynode = new TreeNode();
-           
+
             mynode.Text = dir;
             mynode.Name = dir;
             //给主节点复制子节点
@@ -122,7 +123,7 @@ namespace PDFplusContent
 
         private void mytreeview_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
-           
+
 
 
         }
@@ -131,44 +132,53 @@ namespace PDFplusContent
         {
             //获得当前节点文件名
             string filename = mytreeview.SelectedNode.Name;
-            //转化成bitmap
-
-            var bitmap = _mycontroller.ConvertPdf2Bitmap(filename);
+           //转化成bitmap
+          var bitmap = _mycontroller.ConvertPdf2Bitmap(filename);
             //显示再窗体上
-            pb_display.Image = bitmap;
+          pb_display.Image = bitmap;
 
         }
-
+        /// <summary>
+        /// 点击预览按钮时触发的时间
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void label5_Click(object sender, EventArgs e)
         {
-            //获得图片
+          
+                //获得图片
+
+                var selectnode = mytreeview.SelectedNode;
+                if (selectnode==null)
+                {
+                    return;
+                }
+               string pdffile = mytreeview.SelectedNode.Name;
+
             
-            string pdffile = mytreeview.SelectedNode.Name;
-            //获得添加的文字信息
-            string strinfo = mytextbox.Text;
+                //获得添加的文字信息
+                string strinfo = mytextbox.Text;
 
             //再图片上花花
             System.Drawing.Image smallImg = _mycontroller.ConvertPdf2Bitmap(pdffile);
-           
+
                 using (System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(smallImg))
                 {
-                //添加头像
-                //g.DrawImage(smallImg, 0, 0, smallImg.Width, smallImg.Height);
-                //SolidBrush drawBush = new SolidBrush(Color.Red);
-                //Font drawFont = new Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Millimeter);
-                //string newPath = path + "\\" + filename + ".png";
-                //写汉字
-                var style = cb_bold.Checked ? System.Drawing.FontStyle.Bold : System.Drawing.FontStyle.Regular;
+                    //添加头像
+                    //g.DrawImage(smallImg, 0, 0, smallImg.Width, smallImg.Height);
+                    //SolidBrush drawBush = new SolidBrush(Color.Red);
+                    //Font drawFont = new Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Millimeter);
+                    //string newPath = path + "\\" + filename + ".png";
+                    //写汉字
+                    var style = cb_bold.Checked ? System.Drawing.FontStyle.Bold : System.Drawing.FontStyle.Regular;
 
-                    g.DrawString(strinfo,new System.Drawing.Font(tb_ziti.Text,Convert.ToSingle( numericsize.Value),style ), new SolidBrush(lbl_color.BackColor),Convert.ToSingle( numericX.Value), Convert.ToSingle(numericY.Value));
+                    g.DrawString(strinfo, new System.Drawing.Font(tb_ziti.Text, Convert.ToSingle(numericsize.Value), style), new SolidBrush(lbl_color.BackColor), Convert.ToSingle(numericX.Value), Convert.ToSingle(numericY.Value));
                     //bigImage.Save(newPath, System.Drawing.Imaging.ImageFormat.Png);
-                    
-                } 
 
-            //显示图片
-            pb_display.Image = smallImg;
+                }
 
-
+                //显示图片
+                pb_display.Image = smallImg;
 
         }
         /// <summary>
@@ -178,28 +188,57 @@ namespace PDFplusContent
         /// <param name="e"></param>
         private void label7_Click(object sender, EventArgs e)
         {
-            //获得pbdisplay 中的图片
-          MemoryStream ms = new MemoryStream();
-            string temppath = Environment.CurrentDirectory + @"\temp.jpg";
-          pb_display.Image.Save(temppath, ImageFormat.Jpeg);
-            //用aspose打开
-            iTextSharp.text.Document mydocument = new iTextSharp.text.Document();
-            iTextSharp.text.pdf.PdfWriter.GetInstance(mydocument, new FileStream(@"C:\Users\瑞腾软件\Desktop\testpdf.pdf", FileMode.Create, FileAccess.ReadWrite));
+            FolderBrowserDialog fbd = new FolderBrowserDialog();
+            if (fbd.ShowDialog() == DialogResult.OK)
+            {
+                List<TreeNode> list = new List<TreeNode>();
+                //获得所有打勾的node，获得name
+                foreach (TreeNode item in mytreeview.Nodes)
+                {
+                    list.AddRange( _mycontroller.GetNodeList(item));
+                }
 
-           // iTextSharp.text.pdf.PdfWriter.GetInstance(mydocument, new FileStream(@"C:\Users\瑞腾软件\Desktop\testpdf.pdf", FileMode.Create, FileAccess.ReadWrite));
-            mydocument.Open();
-            var imageStream = new FileStream(temppath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-            pb_display.Image.Save(imageStream,ImageFormat.Jpeg);
-            var image = iTextSharp.text.Image.GetInstance(imageStream);
-            image.Alignment = iTextSharp.text.Image.ALIGN_MIDDLE;
-            mydocument.Add(image);
-            mydocument.Close();
+                foreach (TreeNode treenode in list)
+                {
+                    if (treenode.Checked)
+                    {
+                        string pdfname = treenode.Name;
+                        if (!pdfname.Contains("pdf"))
+                        {
+                            continue;
+                        }
+                        //得到图片
+                        var mypic = _mycontroller.ConvertPdf2Bitmap(treenode.Name);
+                       // string picfile=($"{System.Environment.CurrentDirectory}\\temp.emf");
+                        //再图片上画画
+                       _mycontroller.DrawImage(mypic, mytextbox.Text, cb_bold.Checked, tb_ziti.Text, numericsize.Value, lbl_color.BackColor, numericX.Value, numericY.Value);
+
+                        //构造文件名称
+                        string name = treenode.Text;
+                        string savepath = $"{fbd.SelectedPath}\\{name}";
+                        //保存图片到文件夹中
+                        _mycontroller.SavePdf(mypic,savepath);
+                    }
+                }
+
+            }
+            MessageBox.Show("转换已完成！");
+
+
+
+
+
         }
+
+
+
+
+
 
         private void lbl_color_Click(object sender, EventArgs e)
         {
             ColorDialog mycd = new ColorDialog();
-            if (mycd.ShowDialog()==DialogResult.OK)
+            if (mycd.ShowDialog() == DialogResult.OK)
             {
                 lbl_color.BackColor = mycd.Color;
 
@@ -210,11 +249,11 @@ namespace PDFplusContent
         private void lbl_style_Click(object sender, EventArgs e)
         {
             FontDialog myfd = new FontDialog();
-            if (myfd.ShowDialog()==DialogResult.OK)
+            if (myfd.ShowDialog() == DialogResult.OK)
             {
                 //获得字体名称给，大小，粗体
                 string fontname = myfd.Font.Name;
-                decimal fontsize =Convert.ToDecimal( myfd.Font.Size);
+                decimal fontsize = Convert.ToDecimal(myfd.Font.Size);
                 bool bold = myfd.Font.Bold;
                 tb_ziti.Text = fontname;
                 numericsize.Value = fontsize;
@@ -231,14 +270,14 @@ namespace PDFplusContent
         private void lbl_addwenjian_MouseEnter(object sender, EventArgs e)
         {
             int margin = ((Control)sender).Margin.Top;
-            _myui.UpdateCSize((Control)sender,new Padding(margin-1));
+            _myui.UpdateCSize((Control)sender, new Padding(margin - 1));
             _myui.UpdateCC((Control)sender, System.Drawing.Color.OrangeRed, System.Drawing.Color.White);
         }
 
         private void lbl_addwenjian_MouseLeave(object sender, EventArgs e)
         {
             int margin = ((Control)sender).Margin.Top;
-            _myui.UpdateCSize((Control)sender, new Padding(margin +1));
+            _myui.UpdateCSize((Control)sender, new Padding(margin + 1));
             _myui.UpdateCC((Control)sender, System.Drawing.Color.Tomato, System.Drawing.Color.White);
 
         }

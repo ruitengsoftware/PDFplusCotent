@@ -217,7 +217,7 @@
             this.pb_display.Location = new System.Drawing.Point(3, 99);
             this.pb_display.Name = "pb_display";
             this.pb_display.Size = new System.Drawing.Size(482, 412);
-            this.pb_display.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pb_display.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pb_display.TabIndex = 1;
             this.pb_display.TabStop = false;
             // 
